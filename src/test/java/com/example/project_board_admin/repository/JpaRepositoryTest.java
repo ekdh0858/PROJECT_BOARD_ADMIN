@@ -1,6 +1,6 @@
 package com.example.project_board_admin.repository;
 
-import com.example.project_board_admin.domain.UserAccount;
+import com.example.project_board_admin.domain.AdminAccount;
 import com.example.project_board_admin.domain.constant.RoleType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,9 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 class JpaRepositoryTest {
 
-    private final UserAccountRepository userAccountRepository;
+    private final AdminAccountRepository userAccountRepository;
 
-    public JpaRepositoryTest(@Autowired UserAccountRepository userAccountRepository) {
+    public JpaRepositoryTest(@Autowired AdminAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 
@@ -35,7 +35,7 @@ class JpaRepositoryTest {
         // Given
 
         // When
-        List<UserAccount> userAccounts = userAccountRepository.findAll();
+        List<AdminAccount> userAccounts = userAccountRepository.findAll();
 
         // Then
         assertThat(userAccounts)
@@ -48,7 +48,7 @@ class JpaRepositoryTest {
     void givenUserAccount_whenInserting_thenWorksFine() {
         // Given
         long previousCount = userAccountRepository.count();
-        UserAccount userAccount = UserAccount.of("test", "pw", Set.of(RoleType.DEVELOPER), null, null, null);
+        AdminAccount userAccount = AdminAccount.of("test", "pw", Set.of(RoleType.DEVELOPER), null, null, null);
 
         // When
         userAccountRepository.save(userAccount);
@@ -61,13 +61,13 @@ class JpaRepositoryTest {
     @Test
     void givenUserAccountAndRoleType_whenUpdating_thenWorksFine() {
         // Given
-        UserAccount userAccount = userAccountRepository.getReferenceById("uno");
+        AdminAccount userAccount = userAccountRepository.getReferenceById("uno");
         userAccount.addRoleType(RoleType.DEVELOPER);
         userAccount.addRoleTypes(List.of(RoleType.USER, RoleType.USER));
         userAccount.removeRoleType(RoleType.ADMIN);
 
         // When
-        UserAccount updatedAccount = userAccountRepository.saveAndFlush(userAccount);
+        AdminAccount updatedAccount = userAccountRepository.saveAndFlush(userAccount);
 
         // Then
         assertThat(updatedAccount)
@@ -80,7 +80,7 @@ class JpaRepositoryTest {
     void givenUserAccount_whenDeleting_thenWorksFine() {
         // Given
         long previousCount = userAccountRepository.count();
-        UserAccount userAccount = userAccountRepository.getReferenceById("uno");
+        AdminAccount userAccount = userAccountRepository.getReferenceById("uno");
 
         // When
         userAccountRepository.delete(userAccount);
