@@ -1,6 +1,5 @@
 package com.example.project_board_admin.service;
 
-import com.example.project_board_admin.domain.constant.RoleType;
 import com.example.project_board_admin.dto.ArticleCommentDto;
 import com.example.project_board_admin.dto.UserAccountDto;
 import com.example.project_board_admin.dto.properties.ProjectProperties;
@@ -21,7 +20,6 @@ import org.springframework.test.web.client.MockRestServiceServer;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -117,7 +115,7 @@ class ArticleCommentManagementServiceTest {
             Long articleCommentId = 1L;
             ArticleCommentDto expectedComment = createArticleCommentDto("댓글");
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedComment),
                             MediaType.APPLICATION_JSON
